@@ -11,16 +11,10 @@ type PostProps = {
 
 
 export default function Post({ img, description, createdAt, transaction, receipts }: PostProps) {
-    // let color:any = document.getElementsByClassName(".PostFooterTransaction")
-    // if (transaction > 0){
-    //     color.classList.add("Recebendo")
-        
-    // } else {
-    //     color.classList.add("Gastando")
-    // }
+
     return (
         <>
-            <article className="Post" >
+            <article className={`Post ${!img ? "noimage" : ''}`} >
                 {img && (
                     <img src={img} alt="img" className="PostImage" />
                 )}
@@ -31,14 +25,13 @@ export default function Post({ img, description, createdAt, transaction, receipt
                         </p>
                     </section>
 
-
                     <p className="PostParagraph">
                         {description}
                     </p>
+
                     <div className="PostFooter">
-                        <span className="PostFooterTransaction">
-                            
-                            R$ {transaction}
+                        <span className={`PostFooterTransaction`}>
+                            {transaction > 0 ? "Recebido: " : "Gasto: "}R$ {transaction.toFixed(2).toString().replace(".", ",")}
                         </span>
                         <div className="PostFooterIcons">
                             <FaSearch />
