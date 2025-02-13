@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router'
 import Login from './assets/pages/Login'
 import NgoViewEdit from './assets/pages/NgoViewEdit'
 import NgoView from './assets/pages/NgoView'
-
+import './App.css'
 
 function App() {
 
