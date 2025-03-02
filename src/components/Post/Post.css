@@ -1,0 +1,65 @@
+.Post{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    gap: .5rem;
+    background-color: white;
+    border-radius: 24px;
+}
+
+article.Post.noimage {
+    padding-top: 12px;
+}
+
+.Recebendo{
+    color: #117B11;
+}
+
+.Gastando{
+    color: #961B1B;
+}
+
+.PostParagraph{
+    text-align: left;
+    line-height: normal;
+}
+.PostCreatedAt{
+    text-align: center;
+    font-size: 13px;
+    opacity: 40%;
+}
+
+.PostFooter{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-top: 0.5rem;
+}
+
+.PostFooterTransaction{
+    font-weight: bold;
+}
+
+.PostFooterIcons{
+    opacity: 30%;
+    display: flex;
+    gap: .5rem;
+}
+
+.PostImage{
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    max-height: 200px;
+}
+.PostBottom{
+    padding: 0 24px 12px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
