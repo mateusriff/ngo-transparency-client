@@ -1,0 +1,11 @@
+.p-input-component {
+    font-weight: 500;       
+}
+
+.input-component {
+    height: 44px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: var(--background-color);
+    width: 100%;
+}
