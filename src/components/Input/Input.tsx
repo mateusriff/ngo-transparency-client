@@ -7,11 +7,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function Input({title, ...rest}: InputProps) {
     return(
-        <>
-            <div className="container-input-component">
-                <p className="p-input-component">{title}</p>
-                <input className="input-component" {...rest}/>
-            </div>
-        </>
+        <div className="container-input-component">
+            <p className="p-input-component">{title}</p>
+            <input className="input-component" {...rest}/>
+        </div>
     )
 }
