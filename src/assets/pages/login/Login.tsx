@@ -29,35 +29,32 @@ export default function Login() {
     }
     
     return (
-        <>
-            <main className="main-login">
-                <section className='section-login'>
-                    <h1>Acesse a área da sua ONG</h1>
+        <main className="main-login">
+            <section className='section-login'>
+                <h1>Acesse a área da sua ONG</h1>
 
-                    <img src={logo} alt="Logo bora impactar" className="img-login"/>
+                <img src={logo} alt="Logo bora impactar" className="img-login"/>
                 
-                    <div>
-                        <Input 
+                <div>
+                    <Input 
                         title='E-mail' 
                         type='email' 
                         placeholder='Digite seu E-mail'
                         name="email"
                         onChange={atualizarInfo}
-                        />
+                    />
 
-                        <Input 
+                    <Input 
                         title='Senha' 
                         type='password'
                         placeholder='Digite sua senha'
                         name="senha"
                         onChange={atualizarInfo}
-                        />
-                    </div>
-                    <Button text="Entrar" variant="primary" icon={<IoLogInOutline />} type="submit"/>
-                    {error && <p className="error-text-login">{error}</p>}
-                </section>
-            </main>
-            
-        </>
+                    />
+                </div>
+                <Button text="Entrar" variant="primary" icon={<IoLogInOutline />} type="submit"/>
+                {error && <p className="error-text-login">{error}</p>}
+            </section>
+        </main>
     )
 }
