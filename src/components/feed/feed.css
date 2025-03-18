@@ -1,0 +1,16 @@
+.capa-feed {
+    width: 100vw;
+    height: 200px;
+}
+
+.capa-feed img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.bio-feed img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
