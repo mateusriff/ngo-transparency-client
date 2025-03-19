@@ -1,3 +1,10 @@
+.main-feed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px;
+}
+
 .capa-feed {
     width: 100vw;
     height: 200px;
@@ -9,8 +16,87 @@
     object-fit: cover;
 }
 
+.bio-feed {
+    max-width: 600px;
+}
+
 .bio-feed img {
-    width: 60px;
-    height: 60px;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+}
+
+.horizontal-bio-feed {
+    display: flex;
+    gap: 1rem;
+}
+
+.vertical-bio-feed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .3rem;
+}
+
+.vertical-bio-feed h3 {
+    font-size: 1.3em;
+}
+
+.container-redes {
+    display: flex;
+    gap: 1rem;
+}
+
+.face-icon,
+.face-icon:visited {
+    color: blue;
+}
+
+.insta-icon, 
+.insta-icon:visited {
+    color: rgb(103, 18, 184);
+}
+
+.x-icon,
+.x-icon:visited {
+    color: black;
+}
+
+.container-redes svg {
+    font-size: larger;
+}
+
+/*
+Para tela de usuario
+*/
+
+.container-bio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container-bio .name-icons-feed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.p-description {
+    margin: 6px 0px 12px 0px;
+}
+
+.p-description-center {
+    text-align: center;
+}
+
+
+@media screen and (max-width: 800px) {
+    .bio-feed img {
+        width: 80px;
+        height: 80px;
+    }
 }
