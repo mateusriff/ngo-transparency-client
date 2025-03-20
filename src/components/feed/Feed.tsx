@@ -1,7 +1,8 @@
 import "./feed.css"
 import { FaInstagram, FaFacebook } from "react-icons/fa";
-import { FaXTwitter, FaPlus } from "react-icons/fa6";
+import { FaXTwitter, FaPlus, FaPix } from "react-icons/fa6";
 import Button from "../button/Button";
+import Post from "../Post/Post";
 import { useEffect, useState } from "react";
 
 
@@ -15,6 +16,14 @@ interface feedProps {
     pix_qr_code_link?: string;
     ngo_logo: string;
     bio_description: string;
+}
+
+
+const postMocked = {
+    "img": "https://picsum.photos/200/300?random=3",
+    "description": "Lorem ipsum dolor sit amet. Et eaque laudantium quo nesciunt consequatur eum optio delectus et explicabo doloremque qui cupiditate praesentium. Aut dolores quibusdam eum placeat unde a facilis consequatur eos omnis fuga ut earum molestiae.",
+    "createAt": "03/05/2025",
+    "transaction": -1101.99
 }
 
 
@@ -59,11 +68,11 @@ function Feed({ perfil, capa, name_ngo, x_link, facebook_link, instagram_link, p
                             <div className="name-icons-feed">
                                 <h3>{name_ngo}</h3>
                                 <div className="container-redes">
-                                    <a className="face-icon" href={facebook_link}><FaFacebook />
+                                    <a rel="external" target="_blank" className="face-icon" href={facebook_link}><FaFacebook />
                                     </a>
-                                    <a className="insta-icon" href={instagram_link}><FaInstagram />
+                                    <a rel="external" target="_blank" className="insta-icon" href={instagram_link}><FaInstagram />
                                     </a>
-                                    <a className="x-icon" href={x_link}><FaXTwitter />
+                                    <a rel="external" target="_blank" className="x-icon" href={x_link}><FaXTwitter />
                                     </a>
                                 </div>
                             </div>
@@ -74,9 +83,19 @@ function Feed({ perfil, capa, name_ngo, x_link, facebook_link, instagram_link, p
 
                     {perfil && <Button text="Adicionar" variant="primary" icon={<FaPlus />
 }/>}
+                </section>
 
+                <section className="container-posts-feed">
+
+                    <Post createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction} img={postMocked.img}/>
+
+                    <Post createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction} img={postMocked.img}/>
+
+                    <Post createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction}/>
 
                 </section>
+
+                {!perfil && <a rel="external" target="_blank" href={pix_qr_code_link}><FaPix className="pix-icon" /></a>}
             </main>
         </>
 

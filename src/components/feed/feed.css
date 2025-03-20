@@ -6,7 +6,7 @@
 }
 
 .capa-feed {
-    width: 100vw;
+    width: vw;
     height: 200px;
 }
 
@@ -53,9 +53,9 @@
     color: blue;
 }
 
-.insta-icon, 
+.insta-icon,
 .insta-icon:visited {
-    color: rgb(103, 18, 184);
+    color: rgb(184, 18, 184);
 }
 
 .x-icon,
@@ -93,10 +93,33 @@ Para tela de usuario
     text-align: center;
 }
 
+.container-posts-feed {
+    padding: 48px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pix-icon,
+.pix-icon:visited {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    font-size: 50px;
+    color: #4bb8a9;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 800px) {
     .bio-feed img {
         width: 80px;
         height: 80px;
     }
+
+    .pix-icon,
+    .pix-icon:visited {
+        font-size: 40px;
+    }
+    
 }

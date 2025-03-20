@@ -40,7 +40,7 @@ export default function NgoViewEdit() {
     return (
         <>
             <Feed 
-            capa="https://picsum.photos/200/300?random=1" 
+            capa="https://picsum.photos/200/300?random=2" 
             ngo_logo="https://picsum.photos/200/300?random=1" 
             name_ngo={objectmocked.name}
             bio_description={objectmocked.description}

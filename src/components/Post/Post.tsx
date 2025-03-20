@@ -6,7 +6,7 @@ type PostProps = {
     description: string
     createdAt: string;
     transaction: number;
-    receipts: any[];
+    receipts?: any[];
 }
 
 
