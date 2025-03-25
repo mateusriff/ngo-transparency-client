@@ -7,10 +7,11 @@ type PostProps = {
     createdAt: string;
     transaction: number;
     receipts?: any[];
+    perfil: boolean;
 }
 
 
-export default function Post({ img, description, createdAt, transaction, receipts }: PostProps) {
+export default function Post({ img, description, createdAt, transaction, receipts, perfil }: PostProps) {
 
     return (
         <>
@@ -31,11 +32,11 @@ export default function Post({ img, description, createdAt, transaction, receipt
 
                     <div className="PostFooter">
                         <span className={`PostFooterTransaction`}>
-                            {transaction > 0 ? "Recebido: " : "Gasto: "}R$ {transaction.toFixed(2).toString().replace(".", ",")}
+                            {transaction > 0 ? "Recebido: " : "Gasto: "}R$ {transaction.toFixed(2).toString().replace(".", ",").replace("-", "")}
                         </span>
                         <div className="PostFooterIcons">
-                            <FaSearch />
-                            <FaTrash />
+                            {/* {<FaSearch />} */}
+                            {perfil && <FaTrash />}
                         </div>
 
                     </div>

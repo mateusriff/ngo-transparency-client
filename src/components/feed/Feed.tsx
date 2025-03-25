@@ -1,10 +1,8 @@
 import "./feed.css"
-import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter, FaPlus, FaPix } from "react-icons/fa6";
 import Button from "../button/Button";
 import Post from "../Post/Post";
-import { useEffect, useState } from "react";
-
 
 interface feedProps {
     perfil: boolean;
@@ -16,6 +14,7 @@ interface feedProps {
     pix_qr_code_link?: string;
     ngo_logo: string;
     bio_description: string;
+    contact_phone: string;
 }
 
 
@@ -27,16 +26,8 @@ const postMocked = {
 }
 
 
-function Feed({ perfil, capa, name_ngo, x_link, facebook_link, instagram_link, pix_qr_code_link, ngo_logo, bio_description }: feedProps) {
-
-    const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 481);
-
-    useEffect(() => {
-        const handleResize = () => setIsWideScreen(window.innerWidth >= 481);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
+function Feed({ perfil, capa, name_ngo, x_link, facebook_link, instagram_link, pix_qr_code_link, ngo_logo, bio_description, contact_phone }: feedProps) {
+    console.log(perfil, pix_qr_code_link)
 
     return (
         <>
@@ -45,57 +36,42 @@ function Feed({ perfil, capa, name_ngo, x_link, facebook_link, instagram_link, p
             </section>
             <main className="main-feed">
                 <section className="bio-feed">
-                    
-                    {perfil && isWideScreen ? <div className="horizontal-bio-feed">
+
+                    <div className="container-bio">
                         <img src={ngo_logo} alt="logo da ong" />
-                        <div className="vertical-bio-feed">
+                        <div className="name-icons-feed">
                             <h3>{name_ngo}</h3>
                             <div className="container-redes">
-                                <a className="face-icon" href={facebook_link}><FaFacebook />
-                                </a>
-                                <a className="insta-icon" href={instagram_link}><FaInstagram />
-                                </a>
-                                <a className="x-icon" href={x_link}><FaXTwitter />
-                                </a>
+                                {!!facebook_link && <a rel="external" target="_blank" className="face-icon" href={facebook_link}><FaFacebook />
+                                </a>}
+                                {!!instagram_link && <a rel="external" target="_blank" className="insta-icon" href={instagram_link}><FaInstagram />
+                                </a>}
+                                {!!x_link && <a rel="external" target="_blank" className="x-icon" href={x_link}><FaXTwitter />
+                                </a>}
+                                {!!contact_phone && <a rel="external" target="_blank" className="x-icon" href={`https://wa.me/55${contact_phone}`}><FaWhatsapp />
+                                </a>}
                             </div>
                         </div>
                     </div>
 
-                        :
-
-                        <div className="container-bio">
-                            <img src={ngo_logo} alt="logo da ong" />
-                            <div className="name-icons-feed">
-                                <h3>{name_ngo}</h3>
-                                <div className="container-redes">
-                                    <a rel="external" target="_blank" className="face-icon" href={facebook_link}><FaFacebook />
-                                    </a>
-                                    <a rel="external" target="_blank" className="insta-icon" href={instagram_link}><FaInstagram />
-                                    </a>
-                                    <a rel="external" target="_blank" className="x-icon" href={x_link}><FaXTwitter />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    }
 
                     <p className={perfil ? "p-description" : "p-description p-description-center"}>{bio_description}</p>
 
                     {perfil && <Button text="Adicionar" variant="primary" icon={<FaPlus />
-}/>}
+                    } />}
                 </section>
 
                 <section className="container-posts-feed">
 
-                    <Post createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction} img={postMocked.img}/>
+                    <Post perfil={perfil} createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction} img={postMocked.img} />
 
-                    <Post createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction} img={postMocked.img}/>
+                    <Post perfil={perfil} createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction} img={postMocked.img} />
 
-                    <Post createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction}/>
+                    <Post perfil={perfil} createdAt={postMocked.createAt} description={postMocked.description} transaction={postMocked.transaction} />
 
                 </section>
-
-                {!perfil && <a rel="external" target="_blank" href={pix_qr_code_link}><FaPix className="pix-icon" /></a>}
+                
+                {!perfil && !!pix_qr_code_link && <a rel="external" target="_blank" href={pix_qr_code_link}><FaPix className="pix-icon" /></a>}
             </main>
         </>
 

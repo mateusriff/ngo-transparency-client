@@ -9,8 +9,8 @@ const objectmocked = {
     "contact_phone": "8199999999",
     "instagram_link": "www.instagram.com.br",
     "x_link": "www.x.com",
-    "facebook_link": "www.facebook.com.br",
-    "pix_qr_code_link": "wwlkadaodkaodaodaoda",
+    "facebook_link": undefined,
+    "pix_qr_code_link": undefined,
     "gallery_images_url": [],
     "skills": [
         {
@@ -49,6 +49,7 @@ export default function NgoViewEdit() {
             instagram_link={objectmocked.instagram_link}
             pix_qr_code_link={objectmocked.pix_qr_code_link}
             x_link={objectmocked.x_link}
+            contact_phone={objectmocked.contact_phone}
             />
         </>
     )
