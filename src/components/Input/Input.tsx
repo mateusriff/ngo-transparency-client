@@ -1,8 +1,8 @@
 import "./input.css"
-import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react"
+import {  InputHTMLAttributes } from "react"
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    title: string;
+    title?: string;
 }
 
 export default function Input({title, ...rest}: InputProps) {

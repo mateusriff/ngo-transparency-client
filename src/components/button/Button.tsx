@@ -7,10 +7,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     icon?: ReactNode;
 }
 
-function Button({text, variant, icon, ...res}: ButtonProps) {
+function Button({text, variant, icon, ...rest}: ButtonProps) {
     return(
         <>
-            <button className={variant}> 
+            <button className={variant} {...rest}> 
                 {icon}
                 {text}
             </button>
