@@ -1,8 +1,10 @@
 import "./feed.css"
+import { useState } from "react";
 import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter, FaPlus, FaPix } from "react-icons/fa6";
 import Button from "../button/Button";
 import Post from "../Post/Post";
+import Modal from '../modal/modal'
 
 interface feedProps {
     perfil: boolean;
@@ -27,7 +29,8 @@ const postMocked = {
 
 
 function Feed({ perfil, capa, name_ngo, x_link, facebook_link, instagram_link, pix_qr_code_link, ngo_logo, bio_description, contact_phone }: feedProps) {
-    console.log(perfil, pix_qr_code_link)
+
+    const [open, setOpen] = useState<boolean>(false)
 
     return (
         <>
@@ -57,8 +60,10 @@ function Feed({ perfil, capa, name_ngo, x_link, facebook_link, instagram_link, p
 
                     <p className={perfil ? "p-description" : "p-description p-description-center"}>{bio_description}</p>
 
-                    {perfil && <Button text="Adicionar" variant="primary" icon={<FaPlus />
-                    } />}
+                    {perfil && <Button onClick={()=> setOpen(!open)} text="Adicionar" variant="primary"  icon={<FaPlus />} />}
+
+                    <Modal ngo_logo={ngo_logo} IsOpen={open} setOpen={setOpen}/>
+
                 </section>
 
                 <section className="container-posts-feed">
