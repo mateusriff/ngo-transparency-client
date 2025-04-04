@@ -51,8 +51,8 @@ export default function NgoView() {
         if (!response.ok) {
           throw new Error(`Erro na requisição: ${response.status}`);
         }
-        const data: NgoData[] = await response.json();
-        setNgoData(data[0]);
+        const data: NgoData = await response.json();
+        setNgoData(data);
       } catch (err) {
         setError((err as Error).message);
       } finally {
