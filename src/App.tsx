@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path='/transparencia-editar' element={<NgoViewEdit/>}/>
-          <Route path='/transparencia' element={<NgoView/>}/>
+          <Route path='/transparencia/:id' element={<NgoView/>}/>
         </Routes>
       </Router>
     </>

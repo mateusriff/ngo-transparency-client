@@ -1,55 +1,96 @@
-import Feed from "../../components/feed/Feed"
+import Feed from "../../components/feed/Feed";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const objectmocked = {
-    "id": 21,
-    "name": "ONG TESTE 01 - NÃO APAGAR",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ips",
-    "is_formalized": true,
-    "start_year": 2018,
-    "contact_phone": "8199999999",
-    "instagram_link": "www.instagram.com.br",
-    "x_link": "www.x.com",
-    "facebook_link": "www.facebook.com.br",
-    "pix_qr_code_link": undefined,
-    "gallery_images_url": [],
-    "skills": [
-        {
-            "id": 1,
-            "name": "Artes"
-        }
-    ],
-    "causes": [
-        {
-            "id": 2,
-            "name": "Advocacy- Políticas Públicas",
-            "description": ""
-        }
-    ],
-    "sustainable_development_goals": [
-        {
-            "id": 9,
-            "name": "Indústria, inovação e infraestrutura",
-            "url_ods": "https://brasil.un.org/pt-br/sdgs/9",
-            "logo_url": "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTE1LCJwdXIiOiJibG9iX2lkIn19--43ac2219208e93e544e0edd46c2dc58e78e9e098/ods-09.png"
-        }
-    ]
+// Interface para os dados da ONG
+interface NgoData {
+  is_formalized: boolean;
+  site?: string;
+  start_year: number;
+  id: number;
+  username: string;
+  contact_phone: string;
+  created_at: string;
+  sustainable_development_goals: Array<{
+    id: number;
+    name: string;
+    url_ods: string;
+    logo_url: string;
+  }>;
+  name: string;
+  ong: number;
+  email: string;
+  instagram_link?: string;
+  gallery_images: string[];
+  x_link?: string;
+  skills: Array<{
+    id: number;
+    name: string;
+  }>;
+  description: string;
+  facebook_link?: string;
+  pix_qr_code_link?: string;
+  causes: Array<{
+    id: number;
+    name: string;
+    description: string;
+  }>;
 }
 
 export default function NgoView() {
-    return (
-        <>
-            <Feed 
-            capa="https://picsum.photos/200/300?random=2" 
-            ngo_logo="https://picsum.photos/200/300?random=1" 
-            name_ngo={objectmocked.name}
-            bio_description={objectmocked.description}
-            perfil={false}
-            facebook_link={objectmocked.facebook_link}
-            instagram_link={objectmocked.instagram_link}
-            pix_qr_code_link={objectmocked.pix_qr_code_link}
-            x_link={objectmocked.x_link}
-            contact_phone={objectmocked.contact_phone}
-            />
-        </>
-    )
+  const { id } = useParams();
+
+  const [ngoData, setNgoData] = useState<NgoData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchNgoData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/profiles/${id}`);
+        if (!response.ok) {
+          throw new Error(`Erro na requisição: ${response.status}`);
+        }
+        const data: NgoData[] = await response.json();
+        setNgoData(data[0]);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchNgoData();
+    }
+  }, [id]);
+
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
+
+  if (error) {
+    return <p>Erro: {error}</p>;
+  }
+
+  if (!ngoData) {
+    return <p>Nenhum dado encontrado.</p>;
+  }
+
+  return (
+    <>
+      <Feed
+        capa="https://picsum.photos/200/300?random=2"
+        ngo_logo="https://picsum.photos/200/300?random=1"
+        name_ngo={ngoData.name}
+        bio_description={ngoData.description}
+        perfil={false}
+        facebook_link={ngoData.facebook_link}
+        instagram_link={ngoData.instagram_link}
+        pix_qr_code_link={ngoData.pix_qr_code_link}
+        x_link={ngoData.x_link}
+        contact_phone={ngoData.contact_phone}
+      />
+    </>
+  );
 }
