@@ -1,4 +1,4 @@
-import { FaSearch, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import './Post.css'
 
 type PostProps = {

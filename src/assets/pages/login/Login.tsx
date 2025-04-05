@@ -8,12 +8,12 @@ import { useState } from "react";
 
 export default function Login() {
     
-    const [info, setInfo] = useState({
+    const [_, setInfo] = useState({
         email: "",
         senha: ""
     })
 
-    const [error, setError] = useState('');
+    const [error] = useState('');
 
     // const [filled, setfilled] = useState(false);
 
