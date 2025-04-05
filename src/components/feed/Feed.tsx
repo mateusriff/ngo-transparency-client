@@ -4,7 +4,7 @@ import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter, FaPlus, FaPix } from "react-icons/fa6";
 import Button from "../button/Button";
 import Post from "../Post/Post";
-import Modal from "../modal/modal";
+import Modal from "../modal/Modal";
 import { useParams } from "react-router-dom";
 
 // Interface para os dados do post
