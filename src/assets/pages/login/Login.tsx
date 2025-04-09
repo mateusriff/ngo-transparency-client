@@ -38,9 +38,15 @@ export default function Login() {
         event.preventDefault();
 
         try {
-            const loginResponse = await login()
+            const loginResponse = await login();
 
-            const getNgoResponse = await fetch(`http://localhost:8000/profiles/${(await loginResponse.json()).ngo.id}`);
+            if (!loginResponse.ok) {
+                throw new Error(`Erro na requisição: ${loginResponse.status}`);
+            }
+
+            const getNgoResponse = await fetch(
+                `http://localhost:8000/profiles/${(await loginResponse.json()).ngo.id}`
+            );
             
             // NOTE: change condition to ngoResponse.status == 404 when api is fixed
             if (!getNgoResponse.ok) {
@@ -66,8 +72,12 @@ export default function Login() {
                 }
 
                 navigate(`/transparencia/${ngoToCreate.id}`);
+                localStorage.setItem("current_session_ngo_id", ngoToCreate.id.toString())
             }
-            
+
+            const ngo_id = (await loginResponse.json()).ngo.id;
+            localStorage.setItem("current_session_ngo_id", ngo_id.toString())
+            navigate(`/transparencia/${ngo_id}`);
 
         } catch (err) {
             console.log(err);
