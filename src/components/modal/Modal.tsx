@@ -3,44 +3,36 @@ import Button from '../button/Button';
 import Input from '../Input/Input';
 import { IoClose, IoCheckmark } from "react-icons/io5";
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface modalProps {
     IsOpen: boolean;
     setOpen: (isOpen: boolean) => void;
     ngo_logo: string;
+    refetch_posts: () => void;
 }
 
-export default function Modal({ IsOpen, setOpen, ngo_logo }: modalProps) {
+export default function Modal({ IsOpen, setOpen, ngo_logo, refetch_posts }: modalProps) {
+    const { id } = useParams();
+
     const [info, setInfo] = useState({
         description: "",
         image: null as string | null,
         type: "recebimento",
-        value: ""
+        value: 0.0
     });
 
-    function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-        if (event.target.files && event.target.files[0]) {
-            const file = event.target.files[0];
-            const imageUrl = URL.createObjectURL(file);
-            setInfo(prev => ({ ...prev, image: imageUrl }));
-        }
-    }
-
-    function formatCurrency(value: string, isNegative: boolean) {
-        const numericValue = parseFloat(value.replace(/\D/g, "")) / 100;
-        const formattedValue = (isNegative ? -numericValue : numericValue).toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-        });
-        return formattedValue;
-    }
+    // function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    //     if (event.target.files && event.target.files[0]) {
+    //         const file = event.target.files[0];
+    //         const imageUrl = URL.createObjectURL(file);
+    //         setInfo(prev => ({ ...prev, image: imageUrl }));
+    //     }
+    // }
 
     function handleChangeCurrency(event: React.ChangeEvent<HTMLInputElement>) {
-        const rawValue = event.target.value;
-        setInfo(prev => ({ 
-            ...prev, 
-            value: rawValue ? formatCurrency(rawValue, prev.type === "pagamento") : "" 
-        }));
+        const { name, value } = event.target;
+        setInfo(prev => ({ ...prev, [name]: value }));
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -53,16 +45,43 @@ export default function Modal({ IsOpen, setOpen, ngo_logo }: modalProps) {
         setInfo(prev => ({ 
             ...prev, 
             type: value,
-            value: prev.value ? formatCurrency(prev.value, value === "pagamento") : ""
         }));
     }
 
-    function handleSubmit(event: React.FormEvent) {
+    async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
-        const numericValue = parseFloat(info.value.replace(/[^0-9,]/g, '').replace(',', '.')) || 0;
-        const finalValue = info.type === "pagamento" ? -numericValue : numericValue;
-        const updatedInfo = { ...info, value: finalValue };
-        console.log(updatedInfo);
+        const numericValue = info.value || 0;
+        const finalValue = info.type === "pagamento" ? -numericValue : +numericValue;
+
+        const req_body = {
+            "transaction": finalValue,
+            "title": "",
+            "content": info.description,
+            "ong": id
+        }
+
+        fetch('http://localhost:8000/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(req_body),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro de HTTP! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Sucesso:', data);
+                refetch_posts();
+                setOpen(false);
+            })
+            .catch(error => {
+                console.error('Um erro ocoreu:', error);
+                alert('An error occurred while submitting the data. Please try again.');
+            });
     }
 
     if (IsOpen) {
@@ -85,14 +104,14 @@ export default function Modal({ IsOpen, setOpen, ngo_logo }: modalProps) {
                         />
                     </div>
 
-                    <label htmlFor='picture-input' className={`label-picture ${info.image ? "has-image" : ""}`}
+                    {/* <label htmlFor='picture-input' className={`label-picture ${info.image ? "has-image" : ""}`}
                         style={info.image ? { backgroundImage: `url(${info.image})` } : {}}
                     >
                         <span className='picture-image'>
                             {!info.image && <span className="picture-image">Foto da publicação</span>}
                         </span>
                     </label>
-                    <Input onChange={handleImageChange} type='file' accept='image/*' id='picture-input' />
+                    <Input onChange={handleImageChange} type='file' accept='image/*' id='picture-input' /> */}
 
                     <div className='div-label-radio'>
                         <div className='label-radio'>

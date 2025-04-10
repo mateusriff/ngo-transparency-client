@@ -1,5 +1,5 @@
 import "./feed.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter, FaPlus, FaPix } from "react-icons/fa6";
 import Button from "../button/Button";
@@ -46,32 +46,39 @@ function Feed({
 
   const { id } = useParams();
 
-  // Atualize o tipo do estado postData
   const [postData, setPostData] = useState<PostData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchPostData = async () => {
-      try {
-        const response = await fetch(`http://localhost:8000/posts/${id}`);
-        // NOTE: uncomment this when api is fixed
-        // if (!response.ok) {
-        //   throw new Error(`Erro na requisição: ${response.status}`);
-        // }
-        const data: PostData[] = await response.json();
-        setPostData(data);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchPostData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`http://localhost:8000/posts/${id}`);
+      
+      // NOTE: uncomment this when api is fixed
+      // if (!response.ok) {
+      //   throw new Error(`Erro na requisição: ${response.status}`);
+      // }
+      
+      const data: PostData[] = await response.json();
+      setPostData(data.reverse());
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
 
+  useEffect(() => {
     if (id) {
       fetchPostData();
     }
-  }, [id]);
+  }, [id, fetchPostData]);
+
+  const handleRefetch = async () => {
+    await fetchPostData();
+  } 
 
   if (loading) {
     return <p>Carregando...</p>;
@@ -154,7 +161,7 @@ function Feed({
             />
           )}
 
-          <Modal ngo_logo={ngo_logo} IsOpen={open} setOpen={setOpen} />
+          <Modal ngo_logo={ngo_logo} IsOpen={open} setOpen={setOpen} refetch_posts={handleRefetch} />
         </section>
 
         <section className="container-posts-feed">
@@ -162,6 +169,7 @@ function Feed({
             postData.map((post) => (
               <Post
                 key={post.id}
+                id={post.id}
                 perfil={perfil}
                 createdAt={new Date(post.created_at).toLocaleDateString("pt-BR", {
                   day: "2-digit",
@@ -170,6 +178,7 @@ function Feed({
                 })}
                 description={post.content}
                 transaction={post.transaction}
+                refetch={handleRefetch}
               />
             ))
           ) : (
