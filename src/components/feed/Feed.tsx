@@ -62,7 +62,7 @@ function Feed({
       // }
       
       const data: PostData[] = await response.json();
-      setPostData(data.reverse());
+      setPostData((data && data.length > 0) ? data.reverse() : []);
     } catch (err) {
       setError((err as Error).message);
     } finally {
