@@ -6,12 +6,14 @@ import './App.css'
 
 function App() {
 
+  localStorage.clear();
+
   return (
     <>
       <Router>
         <Routes>
           <Route path='/' element={<Login/>}/>
-          <Route path='/transparencia-editar' element={<NgoViewEdit/>}/>
+          <Route path='/transparencia-editar/:id' element={<NgoViewEdit/>}/>
           <Route path='/transparencia/:id' element={<NgoView/>}/>
         </Routes>
       </Router>

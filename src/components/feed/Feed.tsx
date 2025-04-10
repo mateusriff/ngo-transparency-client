@@ -55,9 +55,10 @@ function Feed({
     const fetchPostData = async () => {
       try {
         const response = await fetch(`http://localhost:8000/posts/${id}`);
-        if (!response.ok) {
-          throw new Error(`Erro na requisição: ${response.status}`);
-        }
+        // NOTE: uncomment this when api is fixed
+        // if (!response.ok) {
+        //   throw new Error(`Erro na requisição: ${response.status}`);
+        // }
         const data: PostData[] = await response.json();
         setPostData(data);
       } catch (err) {
@@ -78,10 +79,6 @@ function Feed({
 
   if (error) {
     return <p>Erro: {error}</p>;
-  }
-
-  if (!postData.length) {
-    return <p>Nenhum dado encontrado.</p>;
   }
 
   return (
@@ -161,19 +158,23 @@ function Feed({
         </section>
 
         <section className="container-posts-feed">
-          {postData.map((post) => (
-            <Post
-              key={post.id}
-              perfil={perfil}
-              createdAt={new Date(post.created_at).toLocaleDateString("pt-BR", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })}
-              description={post.content}
-              transaction={post.transaction}
-            />
-          ))}
+          {postData.length ? (
+            postData.map((post) => (
+              <Post
+                key={post.id}
+                perfil={perfil}
+                createdAt={new Date(post.created_at).toLocaleDateString("pt-BR", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })}
+                description={post.content}
+                transaction={post.transaction}
+              />
+            ))
+          ) : (
+            <p>Nenhuma publicação encontrada.</p>
+          )}
         </section>
 
         {!perfil && !!pix_qr_code_link && (
