@@ -44,17 +44,15 @@ export default function Login() {
                 throw new Error(`Erro na requisição: ${loginResponse.status}`);
             }
 
-            const getNgoResponse = await fetch(
-                `http://localhost:8000/profiles/${(await loginResponse.json()).ngo.id}`
-            );
-            
-            // NOTE: change condition to ngoResponse.status == 404 when api is fixed
-            if (!getNgoResponse.ok) {
-                const ngoToCreate = (await loginResponse.json()).ngo;
+            const loginData = await loginResponse.json();
+            const ngoId = loginData.ngo.id;
 
-                const postNgoResponse = await fetch(
-                    'http://localhost:8000/profiles/', 
-                    {
+            const getNgoResponse = await fetch(`http://localhost:8000/profiles/${ngoId}`);
+            
+            if (!getNgoResponse.ok) {
+                const ngoToCreate = loginData.ngo;
+
+                const postNgoResponse = await fetch('http://localhost:8000/profiles/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -63,24 +61,23 @@ export default function Login() {
                         ...ngoToCreate,
                         ngo: ngoToCreate.id,
                         username: ngoToCreate.name,
-                        email: 'randomngo@email.com'
+                        email: 'randomngo@email.com',
                     }),
-                })
+                });
 
                 if (!postNgoResponse.ok) {
                     throw new Error(`Erro na requisição: ${postNgoResponse.status}`);
                 }
 
                 navigate(`/transparencia/${ngoToCreate.id}`);
-                localStorage.setItem("current_session_ngo_id", ngoToCreate.id.toString())
+                localStorage.setItem("current_session_ngo_id", ngoToCreate.id.toString());
             }
 
-            const ngo_id = (await loginResponse.json()).ngo.id;
-            localStorage.setItem("current_session_ngo_id", ngo_id.toString())
-            navigate(`/transparencia/${ngo_id}`);
+            localStorage.setItem("current_session_ngo_id", ngoId.toString());
+            navigate(`/transparencia/${ngoId}`);
 
         } catch (err) {
-            console.log(err);
+            alert(`Ocorreu um erro ao realizar login: ${err}`);
             // setError((err as Error).message);
         } finally {
             // setLoading(false);

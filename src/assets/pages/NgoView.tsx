@@ -2,6 +2,9 @@ import Feed from "../../components/feed/Feed";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import FallbackBanner from "../img/gray-banner.jpg"
+import FallbackProfilePicture from "../img/profile-picture.jpg"
+
 // Interface para os dados da ONG
 interface NgoData {
   is_formalized: boolean;
@@ -44,6 +47,8 @@ export default function NgoView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const is_current_session_ngo = id == localStorage.getItem("current_session_ngo_id")
+
   useEffect(() => {
     const fetchNgoData = async () => {
       try {
@@ -80,11 +85,11 @@ export default function NgoView() {
   return (
     <>
       <Feed
-        capa="https://picsum.photos/200/300?random=2"
-        ngo_logo="https://picsum.photos/200/300?random=1"
+        capa={FallbackBanner}
+        ngo_logo={FallbackProfilePicture}
         name_ngo={ngoData.name}
         bio_description={ngoData.description}
-        perfil={false}
+        perfil={is_current_session_ngo}
         facebook_link={ngoData.facebook_link}
         instagram_link={ngoData.instagram_link}
         pix_qr_code_link={ngoData.pix_qr_code_link}
