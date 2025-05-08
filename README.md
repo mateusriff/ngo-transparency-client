@@ -1,50 +1,23 @@
-# React + TypeScript + Vite
+# 🌱 Transparência ONG - Plataforma de Prestação de Contas para ONGs
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma plataforma digital voltada para Organizações Não Governamentais (ONGs) que desejam promover transparência e fortalecer sua comunicação com a população. Através de um sistema simples e direto, inspirado na lógica de funcionamento do Linktree, cada ONG cadastrada pode gerenciar sua própria página e compartilhar informações sobre seus **ganhos** e **gastos** de forma acessível e segura.
 
-Currently, two official plugins are available:
+## 🧩 Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ Login seguro para ONGs previamente autorizadas  
+- ✅ Criação de uma página pública personalizada para cada ONG  
+- ✅ Publicação de relatórios financeiros (ganhos e gastos)  
+- ✅ Compartilhamento fácil por meio de link exclusivo  
+- ✅ Interface simples e amigável, focada na transparência com a população  
 
-## Expanding the ESLint configuration
+## 🏛️ Parceria Institucional
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Este projeto foi desenvolvido como parte do projeto de extensão **CinBoraImpactar**, uma parceria entre o **Centro de Informática da Universidade Federal de Pernambuco (CIn-UFPE)** e a **Prefeitura do Recife**. O objetivo é fomentar o uso da tecnologia como ferramenta de impacto social e cidadania.
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Tecnologias Utilizadas
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- Frontend: *[ex: React, HTML, CSS]*
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 📄 Licença
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Este projeto está licenciado sob a **MIT license**
